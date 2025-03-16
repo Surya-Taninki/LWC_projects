@@ -1,0 +1,67 @@
+<template>
+    <lightning-card>
+        <!--Title-->
+        <h1 slot="title" class="slds-text-heading_large slds-text-align_center slds-border_bottom slds-text-title_bold">
+            Sadana's To-Do List
+        </h1>
+
+        <!--Greeting-->
+        <div class="slds-grid slds-gutter slds-p-around_medium">
+            <div class="slds-col slds-text-align_left slds-size_1-of-2">
+                <strong>{Greeting} Sadana!</strong>
+            </div>
+            <div class="slds-col slds-text-align_right slds-size_1-of-2">
+                <span class="slds-truncate">{Time}</span>
+            </div>
+        </div>
+
+        <!--Input section-->
+        <div class="slds-p-around_medium slds-text-align_center">
+            <lightning-input label="Today's Task" placeholder="Enter the task" type="text" value={taskName} onchange={handleinputtask}></lightning-input>
+            <lightning-button label="Add Task" onclick={addtask}></lightning-button>
+        </div>
+
+        <!--Display Tasks-->
+        <ul class="slds-p-top_medium">
+            <h1 class="slds-text-heading_medium slds-text-title_bold">Today's Task List</h1>
+            <template for:each={todolist} for:item="task">
+                <template if:false={task.completed}>
+                    <li key={task.id} class="slds-p-vertical_xx-small slds-text-title_bold slds-grid slds-align-items-center">
+                        <span class="slds-m-left_small slds-col slds-text-align_left slds-size_1-of-2">{task.name}</span>
+                        <lightning-button-icon 
+                        icon-name="utility:check" 
+                        size="x-small" 
+                        class="slds-m-left_small slds-cursor_pointer"  
+                        onclick={markascomplete}
+                        data-id={task.id} 
+                        title="Complete"></lightning-button-icon>
+                        <lightning-button-icon 
+                        icon-name="utility:delete" 
+                        size="x-small" 
+                        class="slds-text-align_right slds-m-left_small slds-cursor_pointer" 
+                        onclick={deletetask} 
+                        data-id={task.id}
+                        title="Delete"></lightning-button-icon>
+                    </li>
+                </template>
+            </template>
+        </ul>
+        <ul class="slds-p-top_medium">
+            <h1 class="slds-text-heading_medium slds-text-title_bold">Completed Task</h1>
+            <template for:each={todolist} for:item="task">
+                <template if:true={task.completed}>
+                    <li key={task.id} class="slds-p-vertical_xx-small slds-text-title_bold slds-grid slds-align-items-center">
+                        <span class="slds-m-left_small slds-col slds-text-align_left slds-size_1-of-2">{task.name}</span>
+                        <lightning-button-icon 
+                        icon-name="utility:delete" 
+                        size="x-small" 
+                        class="slds-text-align_right slds-m-left_small slds-cursor_pointer" 
+                        onclick={deletetask} 
+                        data-id={task.id}
+                        title="Delete"></lightning-button-icon>
+                    </li>
+                </template>
+            </template>
+        </ul>
+    </lightning-card>
+</template>
